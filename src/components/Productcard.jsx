@@ -5,7 +5,7 @@ export default function ProductCard(props) {
   const product = props.product;
 
   return (
-    <Link className="w-[250px] mx-4 h-[350px] shadow-2xl">
+    <Link to={"/overview/"+product.productId} className="w-[250px] mx-4 h-[350px] shadow-2xl">
       <img 
         className="w-full h-[220px] object-cover"
         src={product.images[0]}
