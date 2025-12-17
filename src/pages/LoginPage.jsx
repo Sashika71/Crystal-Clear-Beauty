@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {Link, useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
+import { GrGoogle } from "react-icons/gr";
 
 
     
@@ -11,6 +13,37 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading,setloading]=useState(false)
   const navigate=useNavigate()
+//   const loginWithGoogle=useGoogleLogin(
+// {
+//        onSuccess:(res)=>{
+//         console.log(res)
+//        }
+//     }
+//   )
+
+const loginWithGoogle = useGoogleLogin({
+		onSuccess: (res) => {
+			setloading(true);
+			axios
+				.post(import.meta.env.VITE_BACKEND_URL + "/api/user/google", {
+					accessToken: res.access_token,
+				})
+				.then((response) => {
+					console.log("Login successful", response.data);
+					toast.success("Login successful");
+					localStorage.setItem("token", response.data.token);
+
+					const user = response.data.user;
+					if (user.role === "admin") {
+						navigate("/admin");
+					} else {
+						navigate("/");
+					}
+					setloading(false);
+				});
+		},
+	});
+
 
  function handleLogin() {
    
@@ -84,6 +117,17 @@ setloading(false)
         loading ?"loading.....":"login" 
        }
         </button>
+         
+<button
+						className="w-[400px] h-[50px] bg-green-500 mt-[20px] text-white rounded-xl cursor-pointer flex justify-center items-center"
+						onClick={loginWithGoogle}
+					>
+						<GrGoogle className="mr-[10px]" />
+						{loading ? "loading..." : "Login with Google"}
+					</button>
+
+
+
         <p className="text-black text-color m-[10px]">
           Dont have an account yet?
           &nbsp;
