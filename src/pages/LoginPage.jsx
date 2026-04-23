@@ -8,7 +8,7 @@ import { GrGoogle } from "react-icons/gr";
 
     
 export default function LoginPage() {
-    
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading,setloading]=useState(false)
@@ -46,7 +46,16 @@ const loginWithGoogle = useGoogleLogin({
 
 
  function handleLogin() {
-   
+    if (name.trim().length < 2) {
+      toast.error("Please enter your name");
+      return;
+    }
+
+    if (!email || !password) {
+      toast.error("Email and password are required");
+      return;
+    }
+
     setloading(true)
     console.log("Login button clicked"); 
 
@@ -62,6 +71,7 @@ const loginWithGoogle = useGoogleLogin({
         console.log("Login successful", response.data);
         toast.success("Login succesfull")
       localStorage.setItem("token",response.data.token);
+      localStorage.setItem("displayName", name.trim());
 
      const user = response.data.user; // ✅ get the user object
 if (user.role === "admin") {
@@ -85,57 +95,64 @@ setloading(false)
 
 
     return(
-         <div className="w-full h-screen bg-[url('/login-bg.jpg')] bg-cover flex justify-center items-center">
-      {/* Login Card */}
-      <div className="w-[450px] h-[500px] backdrop-blur-xl shadow-xl rounded-2xl bg-white/20 p-6 flex flex-col items-center">
-        <h1 className="text-2xl font-bold text-white mb-6">Login</h1>
+    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_left,_#ffeaf3_0%,_#fff6fb_38%,_#ffffff_100%)] px-4 py-8">
+      <div className="w-full max-w-md rounded-3xl border border-pink-200/80 bg-white/55 p-6 shadow-[0_24px_70px_rgba(236,72,153,0.16)] backdrop-blur-2xl sm:p-8">
+        <div className="mb-6 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+            Welcome Back
+          </p>
+          <h1 className="mt-3 text-3xl font-semibold text-pink-700">Login</h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Sign in to continue your beauty shopping journey.
+          </p>
+        </div>
 
-        {/* Email Input */}
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-[400px] h-[50px] border border-white rounded-md px-4 mb-4 text-black"
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-        />
+        <div className="space-y-4">
+          <input
+            onChange={(e) => setName(e.target.value)}
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+          />
 
-        {/* Password Input */}
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-[400px] h-[50px] border border-white rounded-md px-4 mb-4 text-black"
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-        />
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+          />
 
-        {/* Login Button */}
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+          />
+        </div>
+
         <button
           onClick={handleLogin}
-          className="w-[400px] h-[50px] bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold"
+          className="mt-5 h-12 w-full rounded-xl bg-pink-500 font-semibold text-white transition hover:bg-pink-600"
         >
-       {
-        loading ?"loading.....":"login" 
-       }
+          {loading ? "Loading..." : "Login"}
         </button>
-         
-<button
-						className="w-[400px] h-[50px] bg-green-500 mt-[20px] text-white rounded-xl cursor-pointer flex justify-center items-center"
-						onClick={loginWithGoogle}
-					>
-						<GrGoogle className="mr-[10px]" />
-						{loading ? "loading..." : "Login with Google"}
-					</button>
 
+        <button
+          className="mt-4 flex h-12 w-full cursor-pointer items-center justify-center rounded-xl border border-pink-200 bg-white/80 font-semibold text-slate-700 transition hover:bg-pink-50"
+          onClick={loginWithGoogle}
+        >
+          <GrGoogle className="mr-3" />
+          {loading ? "Loading..." : "Login with Google"}
+        </button>
 
-
-        <p className="text-black text-color m-[10px]">
+        <p className="mt-5 text-center text-sm text-slate-600">
           Dont have an account yet?
-          &nbsp;
-          <span className="text-green-600 hover:text-green-900">
-            <Link to={"/register"}>
-            Register Now
-            </Link>
-            </span>
+          <span className="ml-1 font-semibold text-pink-600 hover:text-pink-700">
+            <Link to={"/register"}>Register Now</Link>
+          </span>
         </p>
       </div>
     </div>
