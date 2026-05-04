@@ -58,134 +58,117 @@ export default function CheckoutPage() {
 	}
 
 	return (
-		<div className="w-full h-full flex justify-center p-[40px] ">
-			<div className="w-[700px]">
-				{cart.map((item, index) => {
-					return (
-						<div
-							key={index}
-							className="w-full h-[100px] bg-white shadow-2xl my-[5px] flex justify-between items-center relative"
-						>
-							<button
-								className="absolute right-[-50px] bg-red-500 w-[40px] h-[40px] rounded-full text-white flex justify-center items-center shadow cursor-pointer"
-								onClick={() => {
-									const newCart = cart.filter(
-										(product) => product.productId !== item.productId
-									);
-									setCart(newCart);
-								}}
-							>
-								<TbTrash />
-							</button>
-							<img
-								src={item.image}
-								className="h-full aspect-square object-cover"
-							/>
-							<div className="h-full max-w-[300px] w-[300px] overflow-hidden">
-								<h1 className="text-xl font-bold">{item.name}</h1>
-								<h2 className="text-lg text-gray-500">
-									{item.altName?.join(" | ")}
+		<div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+			<div className="mb-6 rounded-[28px] border border-pink-100 bg-[radial-gradient(circle_at_top_left,_rgba(251,207,232,0.6),_rgba(255,251,247,1)_60%,_rgba(255,255,255,1)_100%)] p-6 sm:p-8">
+				<p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-500">Checkout</p>
+				<h1 className="mt-2 text-3xl font-semibold text-slate-900">Complete your order</h1>
+				<p className="mt-2 text-sm text-slate-600">Review your items and enter delivery details</p>
+			</div>
 
-								</h2>
-								<h2 className="text-lg text-gray-500">
-									LKR: {item.price.toFixed(2)}
-								</h2>
-							</div>
-							<div className="h-full w-[100px] flex justify-center items-center">
-								<button
-									className="text-2xl w-[30px] h-[30px] bg-black text-white rounded-full flex justify-center items-center cursor-pointer mx-[5px]"
-									onClick={() => {
+			<div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+				<div className="space-y-4">
+					{cart.map((item, index) => {
+						return (
+							<article key={index} className="relative flex items-center gap-4 rounded-2xl border border-pink-100 bg-white p-4 shadow-sm">
+								<button className="absolute right-3 top-3 text-pink-600 bg-pink-50 rounded-full p-2 hover:bg-pink-100" onClick={() => {
+									const newCart = cart.filter((product) => product.productId !== item.productId);
+									setCart(newCart);
+								}}>
+									<TbTrash />
+								</button>
+
+								<img src={item.image} alt={item.name} className="h-24 w-24 rounded-2xl object-cover" />
+
+								<div className="flex-1 min-w-0">
+									<h1 className="text-lg font-semibold text-slate-900 truncate">{item.name}</h1>
+									<h2 className="text-sm text-slate-500 mt-1">{item.altName?.join(" | ")}</h2>
+									<h2 className="text-sm text-slate-500 mt-1">LKR {item.price.toFixed(2)}</h2>
+								</div>
+
+								<div className="flex items-center gap-3">
+									<button className="h-8 w-8 rounded-full bg-white text-slate-800 flex items-center justify-center shadow-sm hover:bg-pink-50" onClick={() => {
 										const newCart = cart;
 										newCart[index].quantity -= 1;
-										if (newCart[index].quantity <= 0)
-											newCart[index].quantity = 1;
+										if (newCart[index].quantity <= 0) newCart[index].quantity = 1;
 										setCart(newCart);
 										setCartRefresh(!cartRefresh);
-									}}
-								>
-									-
-								</button>
-								<h1 className="text-xl font-bold">{item.quantity}</h1>
-								<button
-									className="text-2xl w-[30px] h-[30px] bg-black text-white rounded-full flex justify-center items-center cursor-pointer mx-[5px]"
-									onClick={() => {
+									}}>−</button>
+									<div className="text-center w-8 text-sm font-semibold text-slate-900">{item.quantity}</div>
+									<button className="h-8 w-8 rounded-full bg-white text-slate-800 flex items-center justify-center shadow-sm hover:bg-pink-50" onClick={() => {
 										const newCart = cart;
 										newCart[index].quantity += 1;
 										setCart(newCart);
 										setCartRefresh(!cartRefresh);
-									}}
-								>
-									+
-								</button>
-							</div>
-							<div className="h-full w-[100px] flex justify-center items-center">
-								<h1 className="text-xl w-full text-end pr-2">
-									{(item.price * item.quantity).toFixed(2)}
-								</h1>
-							</div>
+									}}>+</button>
+								</div>
+
+								<div className="w-28 text-right">
+									<p className="text-xs uppercase tracking-[0.25em] text-slate-400">Subtotal</p>
+									<p className="text-lg font-semibold text-slate-900">LKR {(item.price * item.quantity).toFixed(2)}</p>
+								</div>
+							</article>
+						);
+					})}
+				</div>
+
+				<aside className="h-fit rounded-2xl border border-pink-100 bg-white p-5 shadow-sm">
+					<h2 className="text-lg font-semibold text-slate-900">Order Summary</h2>
+
+					<div className="mt-4 space-y-3 text-sm">
+						<div className="flex items-center justify-between text-slate-600">
+							<span>Total</span>
+							<span>LKR {getTotalForLabelledPrice().toFixed(2)}</span>
 						</div>
-					);
-				})}
-				<div className="w-full  flex justify-end">
-					<h1 className="w-[100px] text-xl  text-end pr-2">Total</h1>
-					<h1 className="w-[100px] text-xl  text-end pr-2">
-						{getTotalForLabelledPrice().toFixed(2)}
-					</h1>
-				</div>
-				<div className="w-full  flex justify-end">
-					<h1 className="w-[100px] text-xl  text-end pr-2">Discount</h1>
-					<h1 className="w-[100px] text-xl border-b-[2px] text-end pr-2">
-						{(getTotalForLabelledPrice() - getTotal()).toFixed(2)}
-					</h1>
-				</div>
-				<div className="w-full  flex justify-end">
-					<h1 className="w-[100px] text-xl  text-end pr-2">Net total</h1>
-					<h1 className="w-[100px] text-xl  text-end pr-2 border-b-[4px] border-double ">
-						{getTotal().toFixed(2)}
-					</h1>
-				</div>
-                <div className="w-full  flex justify-end">
-                    <h1 className="w-[100px] text-xl  text-end pr-2">Name</h1>
-                    <input
-                        className="w-[200px] text-xl border-b-[2px] text-end pr-2"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-				</div>
-                
-                <div className="w-full  flex justify-end">
-                    <h1 className="w-[100px] text-xl  text-end pr-2">Phone</h1>
-                    <input
-                        className="w-[200px] text-xl border-b-[2px] text-end pr-2"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                    />
-                </div>
-                <div className="w-full  flex justify-end">
-                    <h1 className="w-[100px] text-xl  text-end pr-2">Address</h1>
-                    <input
-                        className="w-[200px] text-xl border-b-[2px] text-end pr-2"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                    />
-                </div>
-                <div className="w-full  flex justify-end">
-                    <h1 className="w-[100px] text-xl  text-end pr-2">Address</h1>
-                    <input
-                        className="w-[200px] text-xl border-b-[2px] text-end pr-2"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                    />
-                </div>
-                
-				<div className="w-full  flex justify-end mt-4">
-					<button
-						className="w-[170px] text-xl  text-center shadow pr-2 bg-pink-400 text-white h-[40px] rounded-lg cursor-pointer"
+						<div className="flex items-center justify-between border-b border-pink-100 pb-3 text-slate-600">
+							<span>Discount</span>
+							<span>LKR {(getTotalForLabelledPrice() - getTotal()).toFixed(2)}</span>
+						</div>
+						<div className="flex items-center justify-between text-base font-semibold text-slate-900">
+							<span>Net Total</span>
+							<span>LKR {getTotal().toFixed(2)}</span>
+						</div>
+					</div>
+
+					<div className="mt-5 space-y-3">
+						<label className="flex flex-col text-sm">
+							<span className="mb-2 font-medium text-slate-900">Name</span>
+							<input 
+								type="text"
+								placeholder="Full name"
+								className="rounded-lg border border-pink-100 bg-pink-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-100"
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+							/>
+						</label>
+						<label className="flex flex-col text-sm">
+							<span className="mb-2 font-medium text-slate-900">Phone</span>
+							<input 
+								type="tel"
+								placeholder="+94 77 123 4567"
+								className="rounded-lg border border-pink-100 bg-pink-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-100"
+								value={phone}
+								onChange={(e) => setPhone(e.target.value)}
+							/>
+						</label>
+						<label className="flex flex-col text-sm">
+							<span className="mb-2 font-medium text-slate-900">Address</span>
+							<input 
+								type="text"
+								placeholder="Delivery address"
+								className="rounded-lg border border-pink-100 bg-pink-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-100"
+								value={address}
+								onChange={(e) => setAddress(e.target.value)}
+							/>
+						</label>
+					</div>
+
+					<button 
+						className="mt-5 w-full rounded-full bg-pink-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-600"
 						onClick={placeOrder}
 					>
 						Place Order
 					</button>
-				</div>
+				</aside>
 			</div>
 		</div>
 	);

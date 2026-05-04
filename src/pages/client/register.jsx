@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/images/logo 1.png";
 
 export default function RegisterPage() {
   const [firstName, setFirstName] = useState("");
@@ -73,78 +74,82 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="w-full h-screen bg-[url('/login-bg.jpg')] bg-cover flex justify-center items-center">
-      <div className="w-[480px] min-h-[620px] backdrop-blur-xl shadow-xl rounded-2xl bg-white/20 p-6 flex flex-col items-center">
-        <h1 className="text-2xl font-bold text-white mb-4">Register</h1>
+    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_left,_#ffeaf3_0%,_#fff6fb_38%,_#ffffff_100%)] px-4 py-8">
+      <div className="w-full max-w-md rounded-3xl border border-pink-200/80 bg-white/55 p-6 shadow-[0_24px_70px_rgba(236,72,153,0.16)] backdrop-blur-2xl sm:p-8">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <div className="mb-4 flex items-center gap-3">
+            <img src={logo} alt="Logo" className="h-12 w-12 object-contain" />
+            <h1 className="text-2xl font-bold text-slate-900">Crystal Clear Beauty</h1>
+          </div>
+          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.35em] text-[#ef8275]">
+            Create Account
+          </p>
+          <p className="mt-3 text-sm text-slate-600">
+            Join us to start your beauty journey.
+          </p>
+        </div>
 
-        {/* First Name */}
-        <input
-          onChange={(e) => setFirstName(e.target.value)}
-          className="w-[400px] h-[50px] border border-white rounded-md px-4 mb-3 text-black"
-          type="text"
-          placeholder="First Name"
-          value={firstName}
-        />
+        <div className="space-y-4">
+          <input
+            onChange={(e) => setFirstName(e.target.value)}
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+          />
 
-        {/* Last Name */}
-        <input
-          onChange={(e) => setLastName(e.target.value)}
-          className="w-[400px] h-[50px] border border-white rounded-md px-4 mb-3 text-black"
-          type="text"
-          placeholder="Last Name"
-          value={lastName}
-        />
+          <input
+            onChange={(e) => setLastName(e.target.value)}
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+          />
 
-        {/* Email */}
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-[400px] h-[50px] border border-white rounded-md px-4 mb-3 text-black"
-          type="email"
-          placeholder="Email"
-          value={email}
-        />
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+          />
 
-        {/* Phone (optional) */}
-        <input
-          onChange={(e) => setPhone(e.target.value)}
-          className="w-[400px] h-[50px] border border-white rounded-md px-4 mb-3 text-black"
-          type="text"
-          placeholder="Phone Number (optional)"
-          value={phone}
-        />
+          <input
+            onChange={(e) => setPhone(e.target.value)}
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            type="tel"
+            placeholder="Phone Number (optional)"
+            value={phone}
+          />
 
-        {/* Password */}
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-[400px] h-[50px] border border-white rounded-md px-4 mb-3 text-black"
-          type="password"
-          placeholder="Password (min 6 chars)"
-          value={password}
-        />
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            type="password"
+            placeholder="Password (min 6 chars)"
+            value={password}
+          />
 
-        {/* Confirm Password */}
-        <input
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-[400px] h-[50px] border border-white rounded-md px-4 mb-4 text-black"
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-        />
+          <input
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+          />
+        </div>
 
-        {/* Register Button */}
         <button
           onClick={handleRegister}
           disabled={loading}
-          className={`w-[400px] h-[50px] rounded-md font-semibold ${
-            loading ? "bg-gray-400 text-white cursor-not-allowed" : "bg-green-600 hover:bg-green-700 text-white"
-          }`}
+          className="mt-5 h-12 w-full rounded-xl bg-pink-500 font-semibold text-white transition hover:bg-pink-600 disabled:bg-slate-300"
         >
           {loading ? "Creating Account..." : "Register"}
         </button>
 
-        <p className="text-black text-color mt-[10px]">
+        <p className="mt-5 text-center text-sm text-slate-600">
           Already have an account?
-          <span className="text-blue-600 hover:text-blue-900">
+          <span className="ml-1 font-semibold text-pink-600 hover:text-pink-700">
             <Link to={"/login"}> Login </Link>
           </span>
         </p>

@@ -1,54 +1,8 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
 
-const defaultReviews = [
-  {
-    id: 1,
-    name: "Nimasha",
-    rating: 5,
-    title: "Soft and premium",
-    message:
-      "The layout feels premium and the products are easy to browse on mobile.",
-    date: "2026-04-22T10:00:00.000Z",
-  },
-  {
-    id: 2,
-    name: "Ishan",
-    rating: 5,
-    title: "Clean shopping flow",
-    message:
-      "The store feels clean, fast, and polished from home page to checkout.",
-    date: "2026-04-20T14:20:00.000Z",
-  },
-  {
-    id: 3,
-    name: "Ayesha",
-    rating: 4,
-    title: "Smooth experience",
-    message:
-      "The cart and login flow are clear and the whole experience feels smooth.",
-    date: "2026-04-18T09:15:00.000Z",
-  },
-];
-
-const storageKey = "cbc-reviews";
-
-function getStoredReviews() {
-  if (typeof window === "undefined") {
-    return defaultReviews;
-  }
-
-  try {
-    const stored = window.localStorage.getItem(storageKey);
-    if (!stored) {
-      return defaultReviews;
-    }
-
-    const parsed = JSON.parse(stored);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : defaultReviews;
-  } catch {
-    return defaultReviews;
-  }
-}
+const reviewEndpoint = `${import.meta.env.VITE_BACKEND_URL}/api/review`;
 
 function formatDate(dateValue) {
   return new Date(dateValue).toLocaleDateString("en-US", {
@@ -59,7 +13,8 @@ function formatDate(dateValue) {
 }
 
 export default function ReviewPage() {
-  const [reviews, setReviews] = useState(getStoredReviews);
+  const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [formData, setFormData] = useState({
@@ -69,56 +24,101 @@ export default function ReviewPage() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    window.localStorage.setItem(storageKey, JSON.stringify(reviews));
-  }, [reviews]);
+    loadReviews();
+  }, []);
+
+  async function loadReviews() {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(reviewEndpoint);
+
+      if (Array.isArray(response.data)) {
+        setReviews(response.data);
+        return;
+      }
+
+      if (Array.isArray(response.data?.reviews)) {
+        setReviews(response.data.reviews);
+        return;
+      }
+
+      setReviews([]);
+    } catch (error) {
+      console.error("Failed to fetch reviews", error);
+      toast.error("Could not load reviews.");
+      setReviews([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   function handleFormChange(event) {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    const newReview = {
-      id: Date.now(),
+    const payload = {
       name: formData.name.trim(),
       rating: Number(formData.rating),
       title: formData.title.trim(),
       message: formData.message.trim(),
-      date: new Date().toISOString(),
     };
 
-    setReviews((prev) => [newReview, ...prev]);
-    setFormData({
-      name: "",
-      rating: "5",
-      title: "",
-      message: "",
-    });
-    setSubmitted(true);
+    try {
+      setIsSubmitting(true);
+      await axios.post(reviewEndpoint, payload);
+      await loadReviews();
 
-    window.setTimeout(() => {
-      setSubmitted(false);
-    }, 2500);
+      setFormData({
+        name: "",
+        rating: "5",
+        title: "",
+        message: "",
+      });
+      setSubmitted(true);
+
+      window.setTimeout(() => {
+        setSubmitted(false);
+      }, 2500);
+    } catch (error) {
+      console.error("Failed to submit review", error);
+      toast.error("Could not submit your review.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
-  const visibleReviews = reviews
-    .filter((review) => {
-      if (filter === "all") return true;
-      if (filter === "5") return review.rating === 5;
-      if (filter === "4plus") return review.rating >= 4;
-      return true;
-    })
-    .sort((first, second) => {
-      if (sortBy === "highest") {
-        return second.rating - first.rating || new Date(second.date) - new Date(first.date);
-      }
+  const visibleReviews = useMemo(
+    () =>
+      reviews
+        .filter((review) => {
+          if (filter === "all") return true;
+          if (filter === "5") return review.rating === 5;
+          if (filter === "4plus") return review.rating >= 4;
+          return true;
+        })
+        .sort((first, second) => {
+          if (sortBy === "highest") {
+            return (
+              second.rating - first.rating ||
+              new Date(second.createdAt || second.date) -
+                new Date(first.createdAt || first.date)
+            );
+          }
 
-      return new Date(second.date) - new Date(first.date);
-    });
+          return (
+            new Date(second.createdAt || second.date) -
+            new Date(first.createdAt || first.date)
+          );
+        }),
+    [reviews, filter, sortBy]
+  );
 
   const averageRating = reviews.length
     ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
@@ -238,9 +238,10 @@ export default function ReviewPage() {
 
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-600"
+                disabled={isSubmitting}
+                className="inline-flex items-center justify-center rounded-full bg-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-600 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Submit Review
+                {isSubmitting ? "Submitting..." : "Submit Review"}
               </button>
             </form>
           </section>
@@ -285,16 +286,22 @@ export default function ReviewPage() {
             </div>
 
             <div className="mt-6 grid gap-4">
+              {isLoading && (
+                <div className="rounded-3xl border border-dashed border-pink-200 bg-pink-50 px-6 py-10 text-center text-sm text-slate-600">
+                  Loading reviews...
+                </div>
+              )}
+
               {visibleReviews.map((review) => (
                 <article
-                  key={review.id}
+                  key={review._id || review.id}
                   className="rounded-3xl border border-pink-100 bg-pink-50/50 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
                       <p className="text-sm font-semibold text-slate-900">{review.name}</p>
                       <p className="mt-1 text-xs uppercase tracking-[0.35em] text-pink-500">
-                        {formatDate(review.date)}
+                        {formatDate(review.createdAt || review.date)}
                       </p>
                     </div>
                     <div className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-slate-700 shadow-sm">
@@ -309,7 +316,7 @@ export default function ReviewPage() {
                 </article>
               ))}
 
-              {visibleReviews.length === 0 && (
+              {!isLoading && visibleReviews.length === 0 && (
                 <div className="rounded-3xl border border-dashed border-pink-200 bg-pink-50 px-6 py-10 text-center text-sm text-slate-600">
                   No reviews match the selected filter.
                 </div>

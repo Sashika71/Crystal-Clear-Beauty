@@ -4,11 +4,11 @@ import toast from "react-hot-toast";
 import {Link, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { GrGoogle } from "react-icons/gr";
+import logo from "../assets/images/logo 1.png";
 
 
     
 export default function LoginPage() {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading,setloading]=useState(false)
@@ -46,11 +46,6 @@ const loginWithGoogle = useGoogleLogin({
 
 
  function handleLogin() {
-    if (name.trim().length < 2) {
-      toast.error("Please enter your name");
-      return;
-    }
-
     if (!email || !password) {
       toast.error("Email and password are required");
       return;
@@ -71,7 +66,6 @@ const loginWithGoogle = useGoogleLogin({
         console.log("Login successful", response.data);
         toast.success("Login succesfull")
       localStorage.setItem("token",response.data.token);
-      localStorage.setItem("displayName", name.trim());
 
      const user = response.data.user; // ✅ get the user object
 if (user.role === "admin") {
@@ -97,25 +91,20 @@ setloading(false)
     return(
     <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_left,_#ffeaf3_0%,_#fff6fb_38%,_#ffffff_100%)] px-4 py-8">
       <div className="w-full max-w-md rounded-3xl border border-pink-200/80 bg-white/55 p-6 shadow-[0_24px_70px_rgba(236,72,153,0.16)] backdrop-blur-2xl sm:p-8">
-        <div className="mb-6 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <div className="mb-4 flex items-center gap-3">
+            <img src={logo} alt="Logo" className="h-12 w-12 object-contain" />
+            <h1 className="text-2xl font-bold text-slate-900">Crystal Clear Beauty</h1>
+          </div>
+          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
             Welcome Back
           </p>
-          <h1 className="mt-3 text-3xl font-semibold text-pink-700">Login</h1>
-          <p className="mt-2 text-sm text-slate-600">
+          <p className="mt-3 text-sm text-slate-600">
             Sign in to continue your beauty shopping journey.
           </p>
         </div>
 
         <div className="space-y-4">
-          <input
-            onChange={(e) => setName(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
-            type="text"
-            placeholder="Enter your name"
-            value={name}
-          />
-
           <input
             onChange={(e) => setEmail(e.target.value)}
             className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
@@ -145,7 +134,7 @@ setloading(false)
           onClick={loginWithGoogle}
         >
           <GrGoogle className="mr-3" />
-          {loading ? "Loading..." : "Login with Google"}
+          {loading ? "Loading..." : "Continue with Google"}
         </button>
 
         <p className="mt-5 text-center text-sm text-slate-600">
