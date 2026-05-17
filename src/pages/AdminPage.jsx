@@ -9,21 +9,21 @@ import AdminOrdersPage from './admin/adminOrders';
 
 export default function AdminPage(){
     return(
-         <div className =" w-full h-screen bg-gray-200 flex p-2" >
+         <div className="w-full h-screen bg-pink-50 flex p-2">
 
-            <div className="h-full w-[300px] bg-white" >
-               <Link to="/admin/users" className="text-blue-500 hover:underline flex items-center p-2 "><FaUsers className='mr-2' />Users</Link>
-               <Link to="/admin/products" className="text-blue-500 hover:underline flex item-center">Products</Link>
-               <Link to="/admin/orders" className="text-blue-500 hover:underline flex item-center">Orders</Link>
+            <div className="h-full w-[300px] bg-white border-r border-pink-200 rounded-lg shadow-sm">
+               <Link to="/admin/users" className="text-pink-800 hover:bg-pink-100 hover:text-pink-900 flex items-center p-3 font-semibold transition rounded-md"><FaUsers className='mr-2' />Users</Link>
+               <Link to="/admin/products" className="text-pink-800 hover:bg-pink-100 hover:text-pink-900 flex items-center p-3 font-semibold transition rounded-md">Products</Link>
+               <Link to="/admin/orders" className="text-pink-800 hover:bg-pink-100 hover:text-pink-900 flex items-center p-3 font-semibold transition rounded-md">Orders</Link>
                 </div>
 
 
 
-            <div className="h-full w-[calc(100vw-300px)] bg-gray-200" >
+            <div className="h-full w-[calc(100vw-300px)] bg-pink-50 rounded-lg shadow-sm ml-2">
               
  <Routes>
-<Route index element={<h1>Welcome to Admin Dashboard</h1>} />
-  <Route path="/users" element={<h1>Users</h1>} />
+<Route index element={<h1 className="p-8 text-4xl font-bold text-pink-800">Welcome to Admin Dashboard</h1>} />
+  <Route path="/users" element={<h1 className="p-8 text-4xl font-bold text-pink-800">Users</h1>} />
   <Route path="/products" element={<AdminProdutcsPage/>} />
   <Route path="/orders" element={<AdminOrdersPage/>} />
   <Route path="/addproduct" element={<AddProduct/>}/>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/images/logo 1.png";
+import logo from "../../assets/images/logo 1.jpeg";
 
 export default function RegisterPage() {
   const [firstName, setFirstName] = useState("");
@@ -79,9 +79,9 @@ export default function RegisterPage() {
         <div className="mb-8 flex flex-col items-center text-center">
           <div className="mb-4 flex items-center gap-3">
             <img src={logo} alt="Logo" className="h-12 w-12 object-contain" />
-            <h1 className="text-2xl font-bold text-slate-900">Crystal Clear Beauty</h1>
+            <h1 className="text-2xl font-bold text-pink-800">Crystal Clear Beauty</h1>
           </div>
-          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.35em] text-[#ef8275]">
+          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.35em] text-slate-900">
             Create Account
           </p>
           <p className="mt-3 text-sm text-slate-600">
@@ -92,7 +92,7 @@ export default function RegisterPage() {
         <div className="space-y-4">
           <input
             onChange={(e) => setFirstName(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="text"
             placeholder="First Name"
             value={firstName}
@@ -100,7 +100,7 @@ export default function RegisterPage() {
 
           <input
             onChange={(e) => setLastName(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="text"
             placeholder="Last Name"
             value={lastName}
@@ -108,7 +108,7 @@ export default function RegisterPage() {
 
           <input
             onChange={(e) => setEmail(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="email"
             placeholder="Enter your email"
             value={email}
@@ -116,7 +116,7 @@ export default function RegisterPage() {
 
           <input
             onChange={(e) => setPhone(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="tel"
             placeholder="Phone Number (optional)"
             value={phone}
@@ -124,7 +124,7 @@ export default function RegisterPage() {
 
           <input
             onChange={(e) => setPassword(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="password"
             placeholder="Password (min 6 chars)"
             value={password}
@@ -132,7 +132,7 @@ export default function RegisterPage() {
 
           <input
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="password"
             placeholder="Confirm Password"
             value={confirmPassword}
@@ -142,14 +142,14 @@ export default function RegisterPage() {
         <button
           onClick={handleRegister}
           disabled={loading}
-          className="mt-5 h-12 w-full rounded-xl bg-pink-500 font-semibold text-white transition hover:bg-pink-600 disabled:bg-slate-300"
+          className="mt-5 h-12 w-full rounded-xl bg-pink-800 font-semibold text-white transition hover:bg-pink-900 disabled:bg-slate-300"
         >
           {loading ? "Creating Account..." : "Register"}
         </button>
 
         <p className="mt-5 text-center text-sm text-slate-600">
           Already have an account?
-          <span className="ml-1 font-semibold text-pink-600 hover:text-pink-700">
+          <span className="ml-1 font-semibold text-pink-800 hover:text-pink-900">
             <Link to={"/login"}> Login </Link>
           </span>
         </p>

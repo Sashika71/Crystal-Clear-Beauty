@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Footer from "../../components/Footer";
 
 
 export default function CheckoutPage() {
@@ -58,9 +59,10 @@ export default function CheckoutPage() {
 	}
 
 	return (
-		<div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+		<>
+			<div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
 			<div className="mb-6 rounded-[28px] border border-pink-100 bg-[radial-gradient(circle_at_top_left,_rgba(251,207,232,0.6),_rgba(255,251,247,1)_60%,_rgba(255,255,255,1)_100%)] p-6 sm:p-8">
-				<p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-500">Checkout</p>
+				<p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-800">Checkout</p>
 				<h1 className="mt-2 text-3xl font-semibold text-slate-900">Complete your order</h1>
 				<p className="mt-2 text-sm text-slate-600">Review your items and enter delivery details</p>
 			</div>
@@ -163,7 +165,7 @@ export default function CheckoutPage() {
 					</div>
 
 					<button 
-						className="mt-5 w-full rounded-full bg-pink-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-600"
+						className="mt-5 w-full rounded-full bg-pink-800 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-900"
 						onClick={placeOrder}
 					>
 						Place Order
@@ -171,5 +173,7 @@ export default function CheckoutPage() {
 				</aside>
 			</div>
 		</div>
+		<Footer />
+		</>
 	);
 }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
+import Footer from "../../components/Footer";
 
 const reviewEndpoint = `${import.meta.env.VITE_BACKEND_URL}/api/review`;
 
@@ -128,7 +129,7 @@ export default function ReviewPage() {
     <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <section className="overflow-hidden rounded-[32px] border border-pink-100 bg-white shadow-[0_20px_70px_rgba(244,114,182,0.12)]">
         <div className="border-b border-pink-100 bg-[radial-gradient(circle_at_top_left,_rgba(251,207,232,0.95),_rgba(255,251,247,1)_60%,_rgba(255,255,255,1)_100%)] px-6 py-10 sm:px-10 lg:px-12 lg:py-14">
-          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-800">
             Reviews
           </p>
           <h1 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight text-slate-950 sm:text-4xl lg:text-5xl">
@@ -140,19 +141,19 @@ export default function ReviewPage() {
 
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-pink-100 bg-white/80 p-4 shadow-sm backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-800">
                 Total Reviews
               </p>
               <p className="mt-2 text-3xl font-semibold text-slate-950">{reviews.length}</p>
             </div>
             <div className="rounded-2xl border border-pink-100 bg-white/80 p-4 shadow-sm backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-800">
                 Average Rating
               </p>
               <p className="mt-2 text-3xl font-semibold text-slate-950">{averageRating}</p>
             </div>
             <div className="rounded-2xl border border-pink-100 bg-white/80 p-4 shadow-sm backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-800">
                 Read Options
               </p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
@@ -164,7 +165,7 @@ export default function ReviewPage() {
 
         <div className="grid gap-8 p-6 lg:grid-cols-[0.9fr_1.1fr] lg:p-12">
           <section className="rounded-[28px] border border-pink-100 bg-pink-50/60 p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-800">
               Add a review
             </p>
             <h2 className="mt-3 text-2xl font-semibold text-slate-950">
@@ -239,7 +240,7 @@ export default function ReviewPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex items-center justify-center rounded-full bg-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-600 disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex items-center justify-center rounded-full bg-pink-800 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-900 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {isSubmitting ? "Submitting..." : "Submit Review"}
               </button>
@@ -249,7 +250,7 @@ export default function ReviewPage() {
           <section className="rounded-[28px] border border-pink-100 bg-white p-6 shadow-sm">
             <div className="flex flex-col gap-4 border-b border-pink-100 pb-5 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-500">
+                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-800">
                   Read reviews
                 </p>
                 <h2 className="mt-3 text-2xl font-semibold text-slate-950">
@@ -300,7 +301,7 @@ export default function ReviewPage() {
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
                       <p className="text-sm font-semibold text-slate-900">{review.name}</p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.35em] text-pink-500">
+                      <p className="mt-1 text-xs uppercase tracking-[0.35em] text-pink-800">
                         {formatDate(review.createdAt || review.date)}
                       </p>
                     </div>
@@ -325,6 +326,7 @@ export default function ReviewPage() {
           </section>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

@@ -12,7 +12,7 @@ export default function ProductCard(props) {
       />
       <div className="h-[120px] w-full flex justify-center flex-col px-4">
         <p className="text-sm text-gray-400">{product.productId}</p>
-        <p className="text-lg font-bold">{product.name}</p>
+        <p className="text-base font-bold">{product.name}</p>
         <p>
           {product.price.toFixed(2)} <span className="line-through">
             {product.price<product.labledPrice&&product.labledPrice.toFixed(2)}

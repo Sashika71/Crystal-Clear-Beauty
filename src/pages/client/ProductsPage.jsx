@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import Loader from "../../components/Loaded";
 import ProductCard from "../../components/Productcard";
+import Footer from "../../components/Footer";
 
  
 
@@ -22,10 +23,11 @@ export default function ProductsPage() {
     }
   }, [productsLoaded]);
 return (
-  <div className="h-full w-full">
-    {
-      productsLoaded? 
-      <div className="w-full h-full flex flex-wrap justify-center">
+  <>
+    <div className="h-full w-full py-2">
+      {
+        productsLoaded? 
+        <div className="w-full h-full flex flex-wrap justify-center gap-4 py-8">
 {
     productList.map(
         (product, index) => {
@@ -38,7 +40,9 @@ return (
 </div>
         : <Loader />
     }
-  </div>
+    </div>
+    <Footer />
+  </>
 )
 }
 

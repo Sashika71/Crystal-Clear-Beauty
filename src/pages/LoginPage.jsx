@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import {Link, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { GrGoogle } from "react-icons/gr";
-import logo from "../assets/images/logo 1.png";
+import logo from "../assets/images/logo 1.jpeg";
 
 
     
@@ -94,9 +94,9 @@ setloading(false)
         <div className="mb-8 flex flex-col items-center text-center">
           <div className="mb-4 flex items-center gap-3">
             <img src={logo} alt="Logo" className="h-12 w-12 object-contain" />
-            <h1 className="text-2xl font-bold text-slate-900">Crystal Clear Beauty</h1>
+            <h1 className="text-2xl font-bold text-pink-800">Crystal Clear Beauty</h1>
           </div>
-          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+          <p className="mt-1 text-xs font-semibold uppercase tracking-[0.35em] text-slate-900">
             Welcome Back
           </p>
           <p className="mt-3 text-sm text-slate-600">
@@ -107,7 +107,7 @@ setloading(false)
         <div className="space-y-4">
           <input
             onChange={(e) => setEmail(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="email"
             placeholder="Enter your email"
             value={email}
@@ -115,7 +115,7 @@ setloading(false)
 
           <input
             onChange={(e) => setPassword(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-400 focus:ring-2 focus:ring-pink-100"
+            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="password"
             placeholder="Enter your password"
             value={password}
@@ -124,7 +124,7 @@ setloading(false)
 
         <button
           onClick={handleLogin}
-          className="mt-5 h-12 w-full rounded-xl bg-pink-500 font-semibold text-white transition hover:bg-pink-600"
+          className="mt-5 h-12 w-full rounded-xl bg-pink-800 font-semibold text-white transition hover:bg-pink-900"
         >
           {loading ? "Loading..." : "Login"}
         </button>
@@ -139,7 +139,7 @@ setloading(false)
 
         <p className="mt-5 text-center text-sm text-slate-600">
           Dont have an account yet?
-          <span className="ml-1 font-semibold text-pink-600 hover:text-pink-700">
+          <span className="ml-1 font-semibold text-pink-800 hover:text-pink-900">
             <Link to={"/register"}>Register Now</Link>
           </span>
         </p>

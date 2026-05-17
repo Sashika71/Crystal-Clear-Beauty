@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Footer from "../../components/Footer";
 
 export default function ContactUs() {
   const mapSrc =
@@ -32,7 +33,7 @@ export default function ContactUs() {
       <section className="overflow-hidden rounded-[32px] border border-pink-100 bg-white shadow-[0_20px_70px_rgba(244,114,182,0.12)]">
         <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
           <aside className="bg-[radial-gradient(circle_at_top_left,_rgba(251,207,232,0.95),_rgba(255,251,247,1)_60%,_rgba(255,255,255,1)_100%)] px-6 py-10 sm:px-10 lg:px-12 lg:py-14">
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-800">
               Contact Us
             </p>
             <h1 className="mt-4 text-3xl font-semibold leading-tight text-slate-950 sm:text-4xl">
@@ -124,7 +125,7 @@ export default function ContactUs() {
 
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-600"
+                className="inline-flex items-center justify-center rounded-full bg-pink-800 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-900"
               >
                 Send Message
               </button>
@@ -132,6 +133,7 @@ export default function ContactUs() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

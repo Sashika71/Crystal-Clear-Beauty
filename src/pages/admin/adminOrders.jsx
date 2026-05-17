@@ -79,18 +79,18 @@ export default function AdminOrdersPage() {
 	return (
 		<div className="w-full h-full ">
 			{loaded ? (
-				<div className="w-full h-full">
-					<table className="w-full">
+				<div className="w-full h-full bg-pink-50 p-6 rounded-lg">
+					<table className="w-full border-collapse">
 						<thead>
-							<tr>
-								<th>Order ID</th>
-								<th>Customer Email</th>
-								<th>Customer Name</th>
-								<th>Address</th>
-								<th>Phone Number</th>
-								<th>Status</th>
-								<th>Total</th>
-								<th>Date</th>
+							<tr className="bg-pink-100 border-b-2 border-pink-200">
+								<th className="p-3 text-pink-800 font-semibold min-w-[120px]">Order ID</th>
+								<th className="p-3 text-pink-800 font-semibold min-w-[200px]">Customer Email</th>
+								<th className="p-3 text-pink-800 font-semibold min-w-[120px]">Customer Name</th>
+								<th className="p-3 text-pink-800 font-semibold min-w-[150px]">Address</th>
+								<th className="p-3 text-pink-800 font-semibold min-w-[120px]">Phone Number</th>
+								<th className="p-3 text-pink-800 font-semibold min-w-[120px]">Status</th>
+								<th className="p-3 text-pink-800 font-semibold min-w-[100px]">Total</th>
+								<th className="p-3 text-pink-800 font-semibold min-w-[140px]">Date</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -99,15 +99,15 @@ export default function AdminOrdersPage() {
 								return (
 									<tr
 										key={order.orderId}
-										className="border-b-2 border-gray-300 text-center cursor-pointer hover:bg-gray-100 "
+										className="border-b border-pink-100 text-center cursor-pointer hover:bg-pink-50 transition"
 									>
-										<td className="p-2">{order.orderId}</td>
-										<td className="p-2">{order.email}</td>
-										<td className="p-2">{order.name}</td>
-										<td className="p-2">{order.address}</td>
-										<td className="p-2">{order.phoneNumber}</td>
-										<td className="p-2">
-											<select value={order.status} className="z-[50]" onChange={
+										<td className="p-2 min-w-[120px]">{order.orderId}</td>
+										<td className="p-2 min-w-[200px]">{order.email}</td>
+										<td className="p-2 min-w-[120px]">{order.name}</td>
+										<td className="p-2 min-w-[150px]">{order.address}</td>
+										<td className="p-2 min-w-[120px]">{order.phoneNumber}</td>
+										<td className="p-2 min-w-[120px]">
+												<select value={order.status} className="z-[50] border border-pink-200 rounded px-2 py-1 bg-white text-slate-700 focus:border-pink-800 focus:ring-2 focus:ring-pink-200 outline-none" onChange={
                                                 (e)=>{
                                                     changeOrderStatus(order.orderId,e.target.value)
                                                 }
@@ -118,13 +118,13 @@ export default function AdminOrdersPage() {
 												<option value={"Processing"}>Processing</option>
 											</select>
 										</td>
-										<td className="p-2">{order.total.toFixed(2)}</td>
-										<td className="p-2">
+										<td className="p-2 min-w-[100px] whitespace-nowrap">{order.total.toFixed(2)}</td>
+										<td className="p-2 min-w-[140px] whitespace-nowrap text-sm">
 											{new Date(order.date).toDateString()}
 										</td>
 										<td className="p-2">
 											<button
-												className="bg-gray-700 text-white p-2 rounded-lg"
+												className="bg-pink-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-pink-900 transition shadow-md"
 												onClick={() => {
 													setModalIsDisplaying(true);
 													setDisplayingOrder(order);
@@ -140,54 +140,54 @@ export default function AdminOrdersPage() {
 					</table>
 					{modalIsDisplaying && (
 						<div className="fixed bg-[#00000070] w-full h-full top-0 left-0 flex justify-center items-center">
-							<div className="w-[600px] max-w-[600px] h-[600px] max-h-[600px] bg-white relative">
-								<div className="w-full h-[150px] ">
-									<h1 className="text-sm font-bold  p-2">
-										Order ID: {displayingOrder.orderId}
-									</h1>
-									<h1 className="text-sm font-bold  p-2">
-										Order Date: {new Date(displayingOrder.date).toDateString()}
-									</h1>
-									<h1 className="text-sm font-bold  p-2">
-										Order Status: {displayingOrder.status}
-									</h1>
-									<h1 className="text-sm font-bold  p-2">
-										Order Total: {displayingOrder.total.toFixed(2)}
+								<div className="w-[600px] max-w-[600px] h-[600px] max-h-[600px] bg-white rounded-2xl shadow-2xl relative">
+									<div className="w-full h-[150px] border-b border-pink-200 bg-gradient-to-r from-pink-50 to-white rounded-t-2xl p-4">
+										<h1 className="text-lg font-bold text-pink-800 p-2">
+											Order ID: {displayingOrder.orderId}
+										</h1>
+										<h1 className="text-sm font-semibold text-slate-600 p-2">
+											Order Date: {new Date(displayingOrder.date).toDateString()}
+										</h1>
+										<h1 className="text-sm font-semibold text-slate-600 p-2">
+											Order Status: <span className="text-pink-800 font-bold">{displayingOrder.status}</span>
+										</h1>
+										<h1 className="text-sm font-semibold text-slate-600 p-2">
+											Order Total: <span className="text-pink-800 font-bold">LKR {displayingOrder.total.toFixed(2)}</span>
 									</h1>
 								</div>
-								<div className="w-full h-[450px] max-h-[450px] overflow-y-scroll">
-									{displayingOrder.billItems.map((item, index) => {
-										return (
-											<div
-												key={index}
-												className="w-full h-[100px] bg-white shadow-2xl my-[5px] flex justify-between items-center relative"
-											>
-												<img
-													src={item.image}
-													className="h-full aspect-square object-cover"
-												/>
-												<div className="h-full max-w-[300px] w-[300px] overflow-hidden">
-													<h1 className="text-xl font-bold">
-														{item.productName}
-													</h1>
-													<h2 className="text-lg text-gray-500">
-														LKR: {item.price.toFixed(2)}
-													</h2>
-													<h2 className="text-lg text-gray-500">
-														Quantity: {item.quantity}
-													</h2>
-												</div>
+							<div className="w-full h-[450px] max-h-[450px] overflow-y-scroll p-3 bg-pink-50">
+								{displayingOrder.billItems.map((item, index) => {
+									return (
+										<div
+											key={index}
+											className="w-full h-[100px] bg-white rounded-lg shadow border border-pink-100 my-2 flex justify-between items-center hover:shadow-md transition"
+										>
+											<img
+												src={item.image}
+												className="h-full aspect-square object-cover rounded-l-lg"
+											/>
+											<div className="h-full max-w-[300px] w-[300px] overflow-hidden p-3">
+												<h1 className="text-lg font-bold text-slate-800">
+													{item.productName}
+												</h1>
+												<h2 className="text-base text-pink-800 font-semibold">
+													LKR: {item.price.toFixed(2)}
+												</h2>
+												<h2 className="text-sm text-slate-600">
+													Quantity: {item.quantity}
+												</h2>
 											</div>
-										);
-									})}
-								</div>
+										</div>
+									);
+								})}
+							</div>
 								<button
-									className="w-[40px] absolute right-[-20px] top-[-20px] h-[40px] rounded-full  bg-white shadow shadow-black flex justify-center items-center"
+									className="w-[40px] absolute right-[-20px] top-[-20px] h-[40px] rounded-full bg-pink-800 text-white shadow-lg flex justify-center items-center hover:bg-pink-900 transition"
 									onClick={() => {
 										setModalIsDisplaying(false);
 									}}
 								>
-									<IoCloseSharp />
+									<IoCloseSharp size={20} />
 								</button>
 							</div>
 						</div>

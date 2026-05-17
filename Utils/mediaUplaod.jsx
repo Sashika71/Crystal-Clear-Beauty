@@ -2,8 +2,8 @@ import { createClient } from "@supabase/supabase-js";
 
 
 const supabase = createClient(
-  "https://etdyszvaxlxjmtcmtmzw.supabase.co",  // Your Supabase project URL
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0ZHlzenZheGx4am10Y210bXp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIzNDIzNTYsImV4cCI6MjA3NzkxODM1Nn0.RRGAw7ICj5O4pKDbdUopc-0Ti3ELkHj9E4YERnKDxRI"                // Your Supabase anon/public key
+  "https://jgiwjcyhnpgvghuzecij.supabase.co",  // Your Supabase project URL (without /rest/v1/)
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpnaXdqY3lobnBndmdodXplY2lqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5OTYyMTMsImV4cCI6MjA5NDU3MjIxM30.uV1TTLhsyRMElR9aIPyyLzPY-HP7M5HHz20NQB5lXYg"                // Your Supabase anon/public key
 );
 
 export default function mediaUpload(file) {
@@ -17,14 +17,14 @@ export default function mediaUpload(file) {
 
     // Upload the file to the Supabase "images" storage bucket
     supabase.storage
-      .from("images")
+      .from("Image")
       .upload(newFileName, file, {
         cacheControl: "3600",
         upsert: false,
       })
       .then(() => {
         const url = supabase.storage
-          .from("images")
+          .from("Image")
           .getPublicUrl(newFileName).data.publicUrl;
 
         resolve(url);

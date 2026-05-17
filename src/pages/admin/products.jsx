@@ -56,19 +56,19 @@ async function deleteProduct(id){
 
 
   return (
-    <div className="w-full h-full rounded-lg relative ">
-      <Link to={"/admin/addproduct"} className="text-white bg-gray-700 p-[12px] text-3xl rounded-full cursor-pointer hover:bg-gray-300 hover:text-gray-700 absolute right-5 bottom-5">
+    <div className="w-full h-full rounded-lg relative p-6 bg-pink-50">
+      <Link to={"/admin/addproduct"} className="text-white bg-pink-800 p-3 text-2xl rounded-full cursor-pointer hover:bg-pink-900 absolute right-5 bottom-5 shadow-lg shadow-pink-200 transition">
         <FaPlus />
       </Link>
-       { loaded&&<table className="w-full table-auto border border-gray-300">
+       { loaded&&<table className="w-full table-auto border-collapse">
             <thead>
-                <tr>
-                    <th >productId</th>
-                     <th >productName</th>
-                     <th >productPrice</th>
-                      <th >labledPrice</th>
-                       <th >stock</th>
-                       <th>Actions</th>
+                <tr className="bg-pink-100 border-b-2 border-pink-200">
+                    <th className="px-4 py-3 text-pink-800 font-semibold">productId</th>
+                     <th className="px-4 py-3 text-pink-800 font-semibold">productName</th>
+                     <th className="px-4 py-3 text-pink-800 font-semibold">productPrice</th>
+                      <th className="px-4 py-3 text-pink-800 font-semibold">labledPrice</th>
+                       <th className="px-4 py-3 text-pink-800 font-semibold">stock</th>
+                       <th className="px-4 py-3 text-pink-800 font-semibold">Actions</th>
 
                 </tr>
 
@@ -78,22 +78,22 @@ async function deleteProduct(id){
                {products.map((product) => {
         console.log("mapping", product.productId);
         return (
-        <tr key={product.productId} className="border-b hover:bg-gray-100 text-center">
-            <td className="px-4 py-2">{product.productId}</td>
-            <td className="px-4 py-2">{product.name}</td>
-            <td className="px-4 py-2">{product.price}</td>
-            <td className="px-4 py-2">{product.labledPrice}</td>
-            <td className="px-4 py-2">{product.stock}</td>
+        <tr key={product.productId} className="border-b border-pink-100 hover:bg-pink-50 text-center transition">
+            <td className="px-4 py-2 text-slate-700">{product.productId}</td>
+            <td className="px-4 py-2 text-slate-700">{product.name}</td>
+            <td className="px-4 py-2 text-slate-700">{product.price}</td>
+            <td className="px-4 py-2 text-slate-700">{product.labledPrice}</td>
+            <td className="px-4 py-2 text-slate-700">{product.stock}</td>
             <td className="px-4 py-2">
-              <div className=" w-full h-full  flex justify-center gap-4 ">
+              <div className="w-full h-full flex justify-center gap-4">
                  <FaRegTrashCan onClick={
                   ()=>{
-                    deleteProduct(product._id)
+                    deleteProduct(product.productId)
                   }
                  }
 
                 
-                 className="text-[20px] hover:text-red-600"  />
+                 className="text-lg hover:text-pink-800 cursor-pointer transition"  />
                  <GrEdit 
                      onClick={
                       ()=>{
@@ -104,7 +104,7 @@ async function deleteProduct(id){
                       }
                      }
                  
-                 className="text-[20px] hover:text-blue-600"/>
+                 className="text-lg hover:text-pink-800 cursor-pointer transition"/>
               </div>
             </td>
             

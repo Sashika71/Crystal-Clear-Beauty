@@ -30,7 +30,7 @@ export default function CartPage() {
         return (
             <div className="mx-auto flex w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
                 <section className="w-full rounded-[28px] border border-pink-100 bg-white p-8 text-center shadow-sm">
-                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-500">
+                    <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-800">
                         Your bag
                     </p>
                     <h1 className="mt-3 text-3xl font-semibold text-slate-900">Your cart is empty</h1>
@@ -39,7 +39,7 @@ export default function CartPage() {
                     </p>
                     <button
                         onClick={() => navigate("/products")}
-                        className="mt-6 inline-flex items-center justify-center rounded-full bg-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-600"
+                        className="mt-6 inline-flex items-center justify-center rounded-full bg-pink-800 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-900"
                     >
                         Browse Products
                     </button>
@@ -51,7 +51,7 @@ export default function CartPage() {
     return (
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-8 sm:px-6 lg:px-8">
             <div className="rounded-[28px] border border-pink-100 bg-[radial-gradient(circle_at_top_left,_rgba(251,207,232,0.7),_rgba(255,251,247,1)_60%,_rgba(255,255,255,1)_100%)] p-6 sm:p-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-500">Checkout</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-800">Checkout</p>
                 <h1 className="mt-2 text-3xl font-semibold text-slate-900 sm:text-4xl">Your Cart</h1>
                 <p className="mt-2 text-sm text-slate-600">Review items, adjust quantity, and continue to secure checkout.</p>
             </div>
@@ -133,7 +133,7 @@ export default function CartPage() {
                     </div>
 
                     <button
-                        className="mt-5 w-full rounded-full bg-pink-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-600"
+                        className="mt-5 w-full rounded-full bg-pink-800 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-900"
                         onClick={() => {
                             navigate("/checkout", {
                                 state: {
