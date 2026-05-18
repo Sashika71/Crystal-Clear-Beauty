@@ -79,7 +79,7 @@ export default function AdminOrdersPage() {
 	return (
 		<div className="w-full h-full ">
 			{loaded ? (
-				<div className="w-full h-full bg-pink-50 p-6 rounded-lg">
+				<div className="w-full h-full bg-pink-50 p-0">
 					<table className="w-full border-collapse">
 						<thead>
 							<tr className="bg-pink-100 border-b-2 border-pink-200">
@@ -140,8 +140,8 @@ export default function AdminOrdersPage() {
 					</table>
 					{modalIsDisplaying && (
 						<div className="fixed bg-[#00000070] w-full h-full top-0 left-0 flex justify-center items-center">
-								<div className="w-[600px] max-w-[600px] h-[600px] max-h-[600px] bg-white rounded-2xl shadow-2xl relative">
-									<div className="w-full h-[150px] border-b border-pink-200 bg-gradient-to-r from-pink-50 to-white rounded-t-2xl p-4">
+								<div className="w-[450px] max-w-[450px] h-[500px] max-h-[500px] bg-white rounded-2xl shadow-2xl relative">
+									<div className="w-full h-[120px] border-b border-pink-200 bg-gradient-to-r from-pink-50 to-white rounded-t-2xl p-3">
 										<h1 className="text-lg font-bold text-pink-800 p-2">
 											Order ID: {displayingOrder.orderId}
 										</h1>
@@ -155,25 +155,25 @@ export default function AdminOrdersPage() {
 											Order Total: <span className="text-pink-800 font-bold">LKR {displayingOrder.total.toFixed(2)}</span>
 									</h1>
 								</div>
-							<div className="w-full h-[450px] max-h-[450px] overflow-y-scroll p-3 bg-pink-50">
+							<div className="w-full h-[380px] max-h-[380px] overflow-y-scroll p-2 bg-pink-50">
 								{displayingOrder.billItems.map((item, index) => {
 									return (
 										<div
 											key={index}
-											className="w-full h-[100px] bg-white rounded-lg shadow border border-pink-100 my-2 flex justify-between items-center hover:shadow-md transition"
+											className="w-full h-[80px] bg-white rounded-lg shadow border border-pink-100 my-1 flex justify-between items-center hover:shadow-md transition"
 										>
 											<img
 												src={item.image}
 												className="h-full aspect-square object-cover rounded-l-lg"
 											/>
-											<div className="h-full max-w-[300px] w-[300px] overflow-hidden p-3">
-												<h1 className="text-lg font-bold text-slate-800">
+											<div className="h-full max-w-[280px] w-[280px] overflow-hidden p-2">
+												<h1 className="text-sm font-bold text-slate-800">
 													{item.productName}
 												</h1>
-												<h2 className="text-base text-pink-800 font-semibold">
+												<h2 className="text-xs text-pink-800 font-semibold">
 													LKR: {item.price.toFixed(2)}
 												</h2>
-												<h2 className="text-sm text-slate-600">
+												<h2 className="text-xs text-slate-600">
 													Quantity: {item.quantity}
 												</h2>
 											</div>

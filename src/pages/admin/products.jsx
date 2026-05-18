@@ -93,7 +93,7 @@ async function deleteProduct(id){
                  }
 
                 
-                 className="text-lg hover:text-pink-800 cursor-pointer transition"  />
+                 className="text-lg text-red-600 hover:text-red-800 cursor-pointer transition"  />
                  <GrEdit 
                      onClick={
                       ()=>{
@@ -104,7 +104,7 @@ async function deleteProduct(id){
                       }
                      }
                  
-                 className="text-lg hover:text-pink-800 cursor-pointer transition"/>
+                 className="text-lg text-yellow-600 hover:text-yellow-800 cursor-pointer transition"/>
               </div>
             </td>
             

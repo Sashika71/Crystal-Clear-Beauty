@@ -76,32 +76,32 @@ catch(error){
 
 
     return (
-        <div className="w-full h-full rounded-lg flex justify-center items-center bg-pink-50 p-4">
-            <div className="w-full max-w-md rounded-3xl border border-pink-200 bg-white shadow-lg flex flex-col items-center p-8">
+        <div className="w-full h-auto rounded-lg flex justify-center items-center bg-pink-50 p-4">
+            <div className="w-full max-w-md rounded-3xl border border-pink-200 bg-white shadow-lg flex flex-col items-center p-5">
                 <input
                 disabled
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Product ID"
                     value={productId}
                     onChange={e => setProductId(e.target.value)}
                 />
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Product Name"
                     value={productName}
                     onChange={e => setProductName(e.target.value)}
                 />
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Alternative Names"
                     value={altNames}
                     onChange={e => setAltNames(e.target.value)}
                 />
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Price"
                     type="number"
                     value={price}
@@ -109,7 +109,7 @@ catch(error){
                 />
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Labeled Price"
                     type="number"
                     value={labeledPrice}
@@ -117,7 +117,7 @@ catch(error){
                 />
 
                 <textarea
-                    className="w-full h-20 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="w-full h-16 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Description"
                     value={description}
                     onChange={e => setDescription(e.target.value)}
@@ -130,7 +130,7 @@ catch(error){
                     setImages(e.target.files)
                 }
                 }
-                className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 cursor-pointer focus:border-pink-800"
+                className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 cursor-pointer focus:border-pink-800"
                 // accept="image/*"
                 placeholder="upload the images"
                 multiple
@@ -139,7 +139,7 @@ catch(error){
                 </input>
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Stock"
                     type="number"
                     value={stock}
@@ -148,7 +148,7 @@ catch(error){
                 
 
                 <button 
-    className="w-full h-12 bg-pink-800 text-white rounded-xl m-2 font-semibold transition hover:bg-pink-900 shadow-lg shadow-pink-200"
+    className="w-full h-10 bg-pink-800 text-white rounded-xl m-1 font-semibold transition hover:bg-pink-900 shadow-lg shadow-pink-200"
     onClick={handleSubmit}
 >
     Edit Product

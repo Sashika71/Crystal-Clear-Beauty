@@ -19,10 +19,10 @@ export default function AdminPage(){
 
 
 
-            <div className="h-full w-[calc(100vw-300px)] bg-pink-50 rounded-lg shadow-sm ml-2">
+            <div className="h-full w-[calc(100vw-300px)] bg-pink-50 rounded-lg shadow-sm ml-2 flex flex-col justify-center items-center">
               
  <Routes>
-<Route index element={<h1 className="p-8 text-4xl font-bold text-pink-800">Welcome to Admin Dashboard</h1>} />
+<Route index element={<h1 className="text-4xl font-bold text-pink-800">Welcome to Admin Dashboard</h1>} />
   <Route path="/users" element={<h1 className="p-8 text-4xl font-bold text-pink-800">Users</h1>} />
   <Route path="/products" element={<AdminProdutcsPage/>} />
   <Route path="/orders" element={<AdminOrdersPage/>} />
