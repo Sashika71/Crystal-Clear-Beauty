@@ -17,6 +17,7 @@ export default function ProductsPage() {
       axios
         .get(import.meta.env.VITE_BACKEND_URL + "/api/product")
         .then((res) => {
+      
           setProductList(res.data);
           setProductsLoaded(true);
         });
