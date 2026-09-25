@@ -65,6 +65,7 @@ async function deleteProduct(id){
                 <tr className="bg-pink-100 border-b-2 border-pink-200">
                     <th className="px-4 py-3 text-pink-800 font-semibold">productId</th>
                      <th className="px-4 py-3 text-pink-800 font-semibold">productName</th>
+                     <th className="px-4 py-3 text-pink-800 font-semibold">category</th>
                      <th className="px-4 py-3 text-pink-800 font-semibold">productPrice</th>
                       <th className="px-4 py-3 text-pink-800 font-semibold">labledPrice</th>
                        <th className="px-4 py-3 text-pink-800 font-semibold">stock</th>
@@ -81,6 +82,7 @@ async function deleteProduct(id){
         <tr key={product.productId} className="border-b border-pink-100 hover:bg-pink-50 text-center transition">
             <td className="px-4 py-2 text-slate-700">{product.productId}</td>
             <td className="px-4 py-2 text-slate-700">{product.name}</td>
+            <td className="px-4 py-2 text-slate-700">{product.category || "Uncategorized"}</td>
             <td className="px-4 py-2 text-slate-700">{product.price}</td>
             <td className="px-4 py-2 text-slate-700">{product.labledPrice}</td>
             <td className="px-4 py-2 text-slate-700">{product.stock}</td>

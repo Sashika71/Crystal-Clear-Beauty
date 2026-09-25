@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import mediaUpload from "../../../Utils/mediaUplaod";
+import { PRODUCT_CATEGORIES } from "../../constants/productCategories";
 
 
 export default function EditProduct() {
@@ -14,13 +15,15 @@ export default function EditProduct() {
         toast.error("please select a  product to edit")
         window.location.href="/admin/products"
     }
-    const [productId, setProductId] = useState(locationData.state.productId);
-    const [productName, setProductName] = useState(locationData.state.productName);
-    const [altNames, setAltNames] = useState("");
-    const [price, setPrice] = useState("");
-    const [labeledPrice, setLabeledPrice] = useState("");
-    const [description, setDescription] = useState("");
-    const [stock, setStock] = useState("");
+    const product = locationData.state;
+    const [productId, setProductId] = useState(product.productId);
+    const [productName, setProductName] = useState(product.name);
+    const [altNames, setAltNames] = useState(product.altName?.join(", ") || "");
+    const [price, setPrice] = useState(product.price);
+    const [labeledPrice, setLabeledPrice] = useState(product.labledPrice);
+    const [description, setDescription] = useState(product.description);
+    const [category, setCategory] = useState(product.category || PRODUCT_CATEGORIES[0]);
+    const [stock, setStock] = useState(product.stock);
     const[images,setImages]=useState([]);
     
    
@@ -32,7 +35,7 @@ const promise=mediaUpload(images[i])
 promisesArray[i]=promise
 }
 
-const result =await Promise.all(promisesArray)
+const result = images.length > 0 ? await Promise.all(promisesArray) : product.images;
 try{
        const altNamesInArray=altNames.split(",");
         const product= {
@@ -42,6 +45,7 @@ try{
             price: price,
             labledPrice: labeledPrice,
             description: description,
+            category: category,
             stock: stock,
             images:result
           
@@ -122,6 +126,18 @@ catch(error){
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                 />
+
+                <select
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    value={category}
+                    onChange={e => setCategory(e.target.value)}
+                >
+                    {PRODUCT_CATEGORIES.map(productCategory => (
+                        <option key={productCategory} value={productCategory}>
+                            {productCategory}
+                        </option>
+                    ))}
+                </select>
                 
                 <input 
                 type="file"

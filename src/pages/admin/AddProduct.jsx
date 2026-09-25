@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import mediaUpload from "../../../Utils/mediaUplaod";
+import { PRODUCT_CATEGORIES } from "../../constants/productCategories";
 
 
 export default function AddProduct() {
@@ -13,6 +14,7 @@ export default function AddProduct() {
     const [price, setPrice] = useState("");
     const [labeledPrice, setLabeledPrice] = useState("");
     const [description, setDescription] = useState("");
+    const [category, setCategory] = useState(PRODUCT_CATEGORIES[0]);
     const [stock, setStock] = useState("");
     const[images,setImages]=useState([]);
     const navigate = useNavigate();
@@ -35,6 +37,7 @@ try{
             price: price,
             labledPrice: labeledPrice,
             description: description,
+            category: category,
             stock: stock,
             images:result
           
@@ -114,6 +117,18 @@ catch(error){
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                 />
+
+                <select
+                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    value={category}
+                    onChange={e => setCategory(e.target.value)}
+                >
+                    {PRODUCT_CATEGORIES.map(productCategory => (
+                        <option key={productCategory} value={productCategory}>
+                            {productCategory}
+                        </option>
+                    ))}
+                </select>
                 
                 <input 
                 type="file"

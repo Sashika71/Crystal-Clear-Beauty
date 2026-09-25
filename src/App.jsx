@@ -6,6 +6,7 @@ import AdminPage from './pages/AdminPage'
 import toast, { Toaster } from 'react-hot-toast';
 import RegisterPage from './pages/client/register'
 import HomePage from './pages/HomePage'
+import ChatWidget from "./components/ChatWidget";
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -36,6 +37,7 @@ function App() {
         <Route path="/*" element={<HomePage/>}></Route>
         <Route path="/register" element={<RegisterPage/>}></Route>
       </Routes>
+            <ChatWidget /> 
     </BrowserRouter>
   );
 
