@@ -80,7 +80,8 @@ export default function AdminOrdersPage() {
 		<div className="w-full h-full ">
 			{loaded ? (
 				<div className="w-full h-full bg-pink-50 p-0">
-					<table className="w-full border-collapse">
+					<div className="w-full overflow-x-auto">
+					<table className="min-w-[1140px] w-full border-collapse">
 						<thead>
 							<tr className="bg-pink-100 border-b-2 border-pink-200">
 								<th className="p-3 text-pink-800 font-semibold min-w-[120px]">Order ID</th>
@@ -138,9 +139,10 @@ export default function AdminOrdersPage() {
 							})}
 						</tbody>
 					</table>
+					</div>
 					{modalIsDisplaying && (
-						<div className="fixed bg-[#00000070] w-full h-full top-0 left-0 flex justify-center items-center">
-								<div className="w-[450px] max-w-[450px] h-[500px] max-h-[500px] bg-white rounded-2xl shadow-2xl relative">
+						<div className="fixed inset-0 z-50 flex items-center justify-center bg-[#00000070] p-4">
+								<div className="relative h-[500px] max-h-[calc(100vh-2rem)] w-full max-w-[450px] overflow-hidden rounded-2xl bg-white shadow-2xl">
 									<div className="w-full h-[120px] border-b border-pink-200 bg-gradient-to-r from-pink-50 to-white rounded-t-2xl p-3">
 										<h1 className="text-lg font-bold text-pink-800 p-2">
 											Order ID: {displayingOrder.orderId}
@@ -181,8 +183,8 @@ export default function AdminOrdersPage() {
 									);
 								})}
 							</div>
-								<button
-									className="w-[40px] absolute right-[-20px] top-[-20px] h-[40px] rounded-full bg-pink-800 text-white shadow-lg flex justify-center items-center hover:bg-pink-900 transition"
+															<button
+																className="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-full bg-pink-800 text-white shadow-lg transition hover:bg-pink-900"
 									onClick={() => {
 										setModalIsDisplaying(false);
 									}}

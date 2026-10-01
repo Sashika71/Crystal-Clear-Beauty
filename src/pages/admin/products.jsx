@@ -56,11 +56,12 @@ async function deleteProduct(id){
 
 
   return (
-    <div className="w-full h-full rounded-lg relative p-6 bg-pink-50">
-      <Link to={"/admin/addproduct"} className="text-white bg-pink-800 p-3 text-2xl rounded-full cursor-pointer hover:bg-pink-900 absolute right-5 bottom-5 shadow-lg shadow-pink-200 transition">
+    <div className="relative min-h-full w-full rounded-lg bg-pink-50 p-3 sm:p-6">
+      <Link to={"/admin/addproduct"} className="absolute bottom-4 right-20 rounded-full bg-pink-800 p-3 text-2xl text-white shadow-lg shadow-pink-200 transition hover:bg-pink-900 sm:right-24" aria-label="Add product" title="Add product">
         <FaPlus />
       </Link>
-       { loaded&&<table className="w-full table-auto border-collapse">
+       { loaded&&<div className="w-full overflow-x-auto pb-16">
+        <table className="min-w-[760px] w-full table-auto border-collapse">
             <thead>
                 <tr className="bg-pink-100 border-b-2 border-pink-200">
                     <th className="px-4 py-3 text-pink-800 font-semibold">productId</th>
@@ -114,7 +115,8 @@ async function deleteProduct(id){
         )
       })}
             </tbody>
-        </table>}
+        </table>
+        </div>}
         {
           !loaded&&
          <Loader/>

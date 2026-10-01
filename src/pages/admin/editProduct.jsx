@@ -80,8 +80,8 @@ catch(error){
 
 
     return (
-        <div className="w-full h-auto rounded-lg flex justify-center items-center bg-pink-50 p-4">
-            <div className="w-full max-w-md rounded-3xl border border-pink-200 bg-white shadow-lg flex flex-col items-center p-5">
+        <div className="flex min-h-full w-full items-start justify-center rounded-lg bg-pink-50 p-3 sm:p-6">
+            <div className="flex w-full max-w-md flex-col items-center rounded-3xl border border-pink-200 bg-white p-4 shadow-lg sm:p-5">
                 <input
                 disabled
                     className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -72,31 +71,36 @@ catch(error){
 
 
     return (
-        <div className="w-full h-full rounded-lg flex justify-center items-center bg-pink-50 p-4">
-            <div className="w-full max-w-md rounded-3xl border border-pink-200 bg-white shadow-lg flex flex-col items-center p-8">
+        <div className="mx-auto w-full max-w-3xl px-3 py-4 sm:px-8 sm:py-8">
+            <form className="mx-auto w-full max-w-2xl rounded-2xl border border-pink-200 bg-white p-4 shadow-sm sm:p-8" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+                <div className="mb-6 border-b border-pink-100 pb-4">
+                    <h1 className="text-2xl font-bold text-pink-900">Add Product</h1>
+                    <p className="mt-1 text-sm text-slate-500">Enter the product details below.</p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="h-12 w-full rounded-lg border border-pink-200 px-4 py-2 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Product ID"
                     value={productId}
                     onChange={e => setProductId(e.target.value)}
                 />
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="h-12 w-full rounded-lg border border-pink-200 px-4 py-2 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Product Name"
                     value={productName}
                     onChange={e => setProductName(e.target.value)}
                 />
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="h-12 w-full rounded-lg border border-pink-200 px-4 py-2 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Alternative Names"
                     value={altNames}
                     onChange={e => setAltNames(e.target.value)}
                 />
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="h-12 w-full rounded-lg border border-pink-200 px-4 py-2 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Price"
                     type="number"
                     value={price}
@@ -104,7 +108,7 @@ catch(error){
                 />
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="h-12 w-full rounded-lg border border-pink-200 px-4 py-2 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Labeled Price"
                     type="number"
                     value={labeledPrice}
@@ -112,14 +116,14 @@ catch(error){
                 />
 
                 <textarea
-                    className="w-full h-20 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="min-h-28 w-full rounded-lg border border-pink-200 px-4 py-2 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200 sm:col-span-2"
                     placeholder="Description"
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                 />
 
                 <select
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="h-12 w-full rounded-lg border border-pink-200 px-4 py-2 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     value={category}
                     onChange={e => setCategory(e.target.value)}
                 >
@@ -137,7 +141,7 @@ catch(error){
                     setImages(e.target.files)
                 }
                 }
-                className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 cursor-pointer focus:border-pink-800"
+                className="h-12 w-full rounded-lg border border-pink-200 px-4 py-2 cursor-pointer focus:border-pink-800 sm:col-span-2"
                 // accept="image/*"
                 placeholder="upload the images"
                 multiple
@@ -146,7 +150,7 @@ catch(error){
                 </input>
 
                 <input
-                    className="w-full h-12 border border-pink-200 rounded-xl px-4 py-2 m-2 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    className="h-12 w-full rounded-lg border border-pink-200 px-4 py-2 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
                     placeholder="Stock"
                     type="number"
                     value={stock}
@@ -154,13 +158,11 @@ catch(error){
                 />
                 
 
-                <button 
-    className="w-full h-12 bg-pink-800 text-white rounded-xl m-2 font-semibold transition hover:bg-pink-900 shadow-lg shadow-pink-200"
-    onClick={handleSubmit}
->
-    Save Product
-</button>
-            </div>
+                </div>
+                <button className="mt-6 h-12 w-full rounded-lg bg-pink-800 font-semibold text-white shadow-sm transition hover:bg-pink-900" type="submit">
+                    Save Product
+                </button>
+            </form>
         </div>
     );
 }
