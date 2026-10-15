@@ -1,8 +1,21 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { BsCart4 } from "react-icons/bs";
 import logo from "../assets/images/logo 1.jpeg";
 
 export default function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => Boolean(localStorage.getItem("token"))
+  );
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/login");
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-pink-100 bg-white/90 backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-8 px-4 py-3 sm:px-6 lg:px-8">
@@ -36,12 +49,22 @@ export default function Header() {
           >
             <BsCart4 />
           </Link>
-          <Link
-            to="/login"
-            className="inline-flex h-10 items-center rounded-full bg-pink-800 px-5 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-900"
-          >
-            Login
-          </Link>
+          {isLoggedIn ? (
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="inline-flex h-10 items-center rounded-full bg-pink-800 px-5 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-900"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="inline-flex h-10 items-center rounded-full bg-pink-800 px-5 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-900"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </header>

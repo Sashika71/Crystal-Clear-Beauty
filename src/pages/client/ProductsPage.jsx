@@ -4,6 +4,7 @@ import Loader from "../../components/Loaded";
 import ProductCard from "../../components/Productcard";
 import Footer from "../../components/Footer";
 import { PRODUCT_CATEGORIES } from "../../constants/productCategories";
+import { FiSearch } from "react-icons/fi";
 
  
 
@@ -13,6 +14,7 @@ export default function ProductsPage() {
   const [productList, setProductList] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (!productsLoaded) {
@@ -26,16 +28,46 @@ export default function ProductsPage() {
     }
   }, [productsLoaded]);
 
-  const visibleProducts = selectedCategory === "All"
-    ? productList
-    : productList.filter(product => product.category === selectedCategory);
+  const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+  const visibleProducts = productList.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "All" || product.category === selectedCategory;
+    const searchableText = [
+      product.name,
+      product.productId,
+      product.category,
+      ...(product.altName || []),
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    return (
+      matchesCategory &&
+      (!normalizedSearchTerm || searchableText.includes(normalizedSearchTerm))
+    );
+  });
 
 return (
   <>
     <div className="h-full w-full py-2">
       {
         productsLoaded? 
-        <div className="w-full h-full py-8">
+        <div className="w-full h-full pb-8 pt-2">
+          <div className="mx-auto mb-8 flex w-full max-w-xl items-center rounded-full border border-pink-200 bg-white px-5 py-3 shadow-sm focus-within:border-pink-800 focus-within:ring-2 focus-within:ring-pink-100">
+            <FiSearch
+              className="mr-3 shrink-0 text-xl text-pink-800"
+              aria-hidden="true"
+            />
+            <input
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search products..."
+              aria-label="Search products"
+              className="w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+            />
+          </div>
           <div className="flex flex-wrap justify-center gap-3 px-4 pb-8">
             {["All", ...PRODUCT_CATEGORIES].map(category => (
               <button
@@ -54,7 +86,11 @@ return (
             ))}
           </div>
           {visibleProducts.length === 0 && (
-            <p className="py-12 text-center text-slate-500">No products in this category yet.</p>
+            <p className="py-12 text-center text-slate-500">
+              {normalizedSearchTerm
+                ? `No products found for "${searchTerm.trim()}".`
+                : "No products in this category yet."}
+            </p>
           )}
         </div>
         : <Loader />
@@ -64,4 +100,3 @@ return (
   </>
 )
 }
-
