@@ -31,6 +31,12 @@ export function saveUser(req,res){
 
 
 
+     if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password){
+        return res.status(400).json({
+            message:"Email, first name, last name, and password are required"
+        });
+     }
+
      const hashPassword=bcrypt.hashSync(req.body.password,10)
       const user=new User({
         email:req.body.email,
@@ -46,15 +52,29 @@ export function saveUser(req,res){
 
       user.save().then( 
         ()=>{
-            res.json({
-                meassage:"user save succesfully"
+            res.status(201).json({
+                message:"User saved successfully"
             })
         }
       ) .catch(
-        ()=>{
-            res.json({
-                message:"error occured"
-            })
+        (error)=>{
+            console.error("Registration failed:", error);
+
+            if(error.code === 11000){
+                return res.status(409).json({
+                    message:"An account with this email already exists"
+                });
+            }
+
+            if(error.name === "ValidationError"){
+                return res.status(400).json({
+                    message:Object.values(error.errors).map((validationError) => validationError.message).join(", ")
+                });
+            }
+
+            return res.status(500).json({
+                message:"Registration failed. Please try again."
+            });
         }
       )
 
@@ -63,8 +83,20 @@ export function saveUser(req,res){
  export function loginUser(req,res){
 
      
-    const email=req.body.email;
+    const email=req.body.email?.trim().toLowerCase();
     const password=req.body.password;
+
+    if(!email || !password){
+        return res.status(400).json({
+            message:"Email and password are required"
+        });
+    }
+
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        return res.status(400).json({
+            message:"Please enter a valid email address"
+        });
+    }
 
     User.findOne({
         email:email
@@ -73,8 +105,8 @@ export function saveUser(req,res){
     } )
     .then((user)=>{
         if(user==null){
-            res.json({
-                message:"user not found"
+            res.status(401).json({
+                message:"User does not exist"
             })
         }
         else{
@@ -102,8 +134,8 @@ export function saveUser(req,res){
 
             }
             else{
-                res.json({
-                    message:"invalid password"
+                res.status(401).json({
+                    message:"Invalid email or password"
                 })
             }
         }
