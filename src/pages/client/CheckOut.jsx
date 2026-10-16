@@ -14,13 +14,31 @@ export default function CheckoutPage() {
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [phone, setPhone] = useState("");
-	const navigate = useNavigate();
-   function placeOrder(){
-    
+    const [submitted, setSubmitted] = useState(false);
+    const [phoneError, setPhoneError] = useState("");
+    const navigate = useNavigate();
+    function placeOrder(){
+    	const trimmedName = name.trim();
+    	const trimmedAddress = address.trim();
+    	const trimmedPhone = phone.trim();
+    	const normalizedPhone = trimmedPhone.replace(/[\s-]/g, "");
+
+    	if (!trimmedName || !trimmedPhone || !trimmedAddress) {
+    		setPhoneError("");
+    		return;
+    	}
+
+    	if (!/^(?:0?7\d{8}|\+947\d{8})$/.test(normalizedPhone)) {
+    		setPhoneError("Please enter a valid phone number");
+    		return;
+    	}
+
+    	setPhoneError("");
+
         const orderData = {
-            name : "name",
-            address : "address",
-            phoneNumber :phone,
+            name : trimmedName,
+            address : trimmedAddress,
+            phoneNumber :trimmedPhone,
             billItems : []        
         }
         for(let i = 0; i< cart.length; i++){
@@ -56,6 +74,12 @@ export default function CheckoutPage() {
 			total += item.labeledPrice * item.quantity;
 		});
 		return total;
+	}
+
+	function handleSubmit(event) {
+		event.preventDefault();
+		setSubmitted(true);
+		placeOrder();
 	}
 
 	return (
@@ -113,6 +137,7 @@ export default function CheckoutPage() {
 					})}
 				</div>
 
+				<form onSubmit={handleSubmit} noValidate>
 				<aside className="h-fit rounded-2xl border border-pink-100 bg-white p-5 shadow-sm">
 					<h2 className="text-lg font-semibold text-slate-900">Order Summary</h2>
 
@@ -137,40 +162,52 @@ export default function CheckoutPage() {
 							<input 
 								type="text"
 								placeholder="Full name"
+								required
 								className="rounded-lg border border-pink-100 bg-pink-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-100"
 								value={name}
 								onChange={(e) => setName(e.target.value)}
 							/>
+							{submitted && !name.trim() && <span className="mt-1 text-xs text-red-600">Required</span>}
 						</label>
 						<label className="flex flex-col text-sm">
 							<span className="mb-2 font-medium text-slate-900">Phone</span>
 							<input 
 								type="tel"
 								placeholder="+94 77 123 4567"
+								required
+								inputMode="tel"
 								className="rounded-lg border border-pink-100 bg-pink-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-100"
 								value={phone}
-								onChange={(e) => setPhone(e.target.value)}
+								onChange={(e) => {
+									setPhone(e.target.value);
+									setPhoneError("");
+								}}
 							/>
+							{submitted && !phone.trim() && <span className="mt-1 text-xs text-red-600">Please enter a phone number</span>}
+							{phoneError && <span className="mt-1 text-xs text-red-600">{phoneError}</span>}
 						</label>
 						<label className="flex flex-col text-sm">
 							<span className="mb-2 font-medium text-slate-900">Address</span>
 							<input 
 								type="text"
 								placeholder="Delivery address"
+								required
 								className="rounded-lg border border-pink-100 bg-pink-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-100"
 								value={address}
 								onChange={(e) => setAddress(e.target.value)}
 							/>
+							{submitted && !address.trim() && <span className="mt-1 text-xs text-red-600">Required</span>}
 						</label>
 					</div>
 
 					<button 
+						type="submit"
 						className="mt-5 w-full rounded-full bg-pink-800 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-200 transition hover:-translate-y-0.5 hover:bg-pink-900"
-						onClick={placeOrder}
 					>
 						Place Order
 					</button>
 				</aside>
+				</form>
 			</div>
 		</div>
 		<Footer />

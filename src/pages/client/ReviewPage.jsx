@@ -35,6 +35,7 @@ export default function ReviewPage() {
     try {
       setIsLoading(true);
       const response = await axios.get(reviewEndpoint);
+      const responseReviews = response.data?.data;
 
       if (Array.isArray(response.data)) {
         setReviews(response.data);
@@ -43,6 +44,11 @@ export default function ReviewPage() {
 
       if (Array.isArray(response.data?.reviews)) {
         setReviews(response.data.reviews);
+        return;
+      }
+
+      if (Array.isArray(responseReviews)) {
+        setReviews(responseReviews);
         return;
       }
 
@@ -126,7 +132,7 @@ export default function ReviewPage() {
     : "0.0";
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div className="mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 lg:px-8 lg:pb-14">
       <section className="overflow-hidden rounded-[32px] border border-pink-100 bg-white shadow-[0_20px_70px_rgba(244,114,182,0.12)]">
         <div className="border-b border-pink-100 bg-[radial-gradient(circle_at_top_left,_rgba(251,207,232,0.95),_rgba(255,251,247,1)_60%,_rgba(255,255,255,1)_100%)] px-6 py-10 sm:px-10 lg:px-12 lg:py-14">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-800">

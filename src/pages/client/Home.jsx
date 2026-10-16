@@ -36,10 +36,10 @@ export default function Home() {
   const imageSrc = heroImage;
 
   return (
-    <div className="mx-auto flex w-full flex-col gap-10 py-3 lg:py-8">
+    <div className="mx-auto flex w-full flex-col gap-10 pb-3 lg:pb-8">
       <section className="overflow-hidden w-full h-screen border-b border-pink-100 bg-white">
         <div className="grid h-full lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="flex flex-col justify-center gap-8 bg-[radial-gradient(circle_at_top_left,_rgba(251,207,232,0.92),_rgba(255,251,247,1)_58%,_rgba(255,255,255,1)_100%)] px-6 py-16 sm:px-12 lg:px-16 lg:py-20">
+          <div className="flex -translate-y-3 flex-col justify-center gap-8 bg-[radial-gradient(circle_at_top_left,_rgba(251,207,232,0.92),_rgba(255,251,247,1)_58%,_rgba(255,255,255,1)_100%)] px-6 py-16 sm:px-12 lg:px-16 lg:py-20">
             <span className="text-xs font-semibold uppercase tracking-[0.45em] text-pink-800">
               New Collection
             </span>
@@ -78,12 +78,12 @@ export default function Home() {
 
             <div className="absolute inset-0 bg-gradient-to-l from-white/5 via-transparent to-black/12" />
 
-            <div className="absolute bottom-8 left-6 right-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="absolute bottom-20 left-6 right-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div className="max-w-xs rounded-3xl border border-white/50 bg-white/85 px-6 py-4 text-slate-800 shadow-xl backdrop-blur-md">
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-pink-800">
                   Signature Look
                 </p>
-                <p className="mt-3 text-sm leading-6">
+                <p className="mt-2 text-sm leading-6">
                   Soft glow, clean skin tones, and a luxury storefront feel.
                 </p>
               </div>

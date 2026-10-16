@@ -12,6 +12,8 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading,setloading]=useState(false)
+  const [submitted, setSubmitted] = useState(false);
+  const [loginError, setLoginError] = useState("");
   const navigate=useNavigate()
 //   const loginWithGoogle=useGoogleLogin(
 // {
@@ -46,8 +48,11 @@ const loginWithGoogle = useGoogleLogin({
 
 
  function handleLogin() {
-    if (!email || !password) {
-      toast.error("Email and password are required");
+    setSubmitted(true);
+    setLoginError("");
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail || !password || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
       return;
     }
 
@@ -55,7 +60,7 @@ const loginWithGoogle = useGoogleLogin({
     console.log("Login button clicked"); 
 
      axios.post(import.meta.env.VITE_BACKEND_URL+'/api/user/login',{
-        email: email,
+        email: trimmedEmail,
         password: password,
      })
      .then((response) => {
@@ -79,8 +84,9 @@ setloading(false)
         
       })
       .catch((error) => {
-        console.error("Login failed", error.response.data );
-       toast.error(error.response.data.message||"Login failed");
+       const message = error.response?.data?.message || "Login failed";
+       console.error("Login failed", message);
+       setLoginError(message);
        setloading(false)
       })
 
@@ -106,20 +112,38 @@ setloading(false)
 
         <div className="space-y-4">
           <input
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setLoginError("");
+            }}
             className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="email"
             placeholder="Enter your email"
             value={email}
           />
+          {submitted && !email.trim() && (
+            <p className="mt-[-0.75rem] text-xs text-red-600">Enter email</p>
+          )}
+          {submitted && email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) && (
+            <p className="mt-[-0.75rem] text-xs text-red-600">Enter a valid email address</p>
+          )}
 
           <input
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setLoginError("");
+            }}
             className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
             type="password"
             placeholder="Enter your password"
             value={password}
           />
+          {submitted && !password && (
+            <p className="mt-[-0.75rem] text-xs text-red-600">Enter password</p>
+          )}
+          {loginError && (
+            <p className="text-xs text-red-600" role="alert">{loginError}</p>
+          )}
         </div>
 
         <button

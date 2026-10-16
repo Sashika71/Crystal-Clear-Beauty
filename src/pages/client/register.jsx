@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo 1.jpeg";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function RegisterPage() {
   const [firstName, setFirstName] = useState("");
@@ -12,31 +13,28 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone]         = useState("");
   const [loading, setLoading]     = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigate = useNavigate();
 
   function validateInputs() {
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password) {
-      toast.error("Please fill all required fields.");
-      return false;
-    }
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password || !confirmPassword) return false;
 
     // Basic email format check
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      toast.error("Please enter a valid email address.");
       return false;
     }
 
     // Password length check (adjust minimum as needed)
     if (password.length < 6) {
-      toast.error("Password must be at least 6 characters long.");
       return false;
     }
 
     // Confirm password
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match.");
       return false;
     }
 
@@ -44,6 +42,7 @@ export default function RegisterPage() {
   }
 
   async function handleRegister() {
+    setSubmitted(true);
     if (!validateInputs()) return;
 
     setLoading(true);
@@ -89,7 +88,15 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        <div className="space-y-4">
+        <form
+          id="register-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleRegister();
+          }}
+          className="space-y-4"
+          noValidate
+        >
           <input
             onChange={(e) => setFirstName(e.target.value)}
             className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
@@ -97,6 +104,7 @@ export default function RegisterPage() {
             placeholder="First Name"
             value={firstName}
           />
+          {submitted && !firstName.trim() && <p className="text-xs text-red-600">This field is required</p>}
 
           <input
             onChange={(e) => setLastName(e.target.value)}
@@ -105,6 +113,7 @@ export default function RegisterPage() {
             placeholder="Last Name"
             value={lastName}
           />
+          {submitted && !lastName.trim() && <p className="text-xs text-red-600">This field is required</p>}
 
           <input
             onChange={(e) => setEmail(e.target.value)}
@@ -113,6 +122,10 @@ export default function RegisterPage() {
             placeholder="Enter your email"
             value={email}
           />
+          {submitted && !email.trim() && <p className="text-xs text-red-600">This field is required</p>}
+          {submitted && email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) && (
+            <p className="text-xs text-red-600">Enter a valid email address</p>
+          )}
 
           <input
             onChange={(e) => setPhone(e.target.value)}
@@ -122,25 +135,58 @@ export default function RegisterPage() {
             value={phone}
           />
 
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
-            type="password"
-            placeholder="Password (min 6 chars)"
-            value={password}
-          />
+          <div>
+            <div className="relative">
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 pr-16 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password (min 6 chars)"
+                value={password}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((visible) => !visible)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-pink-800"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+              </button>
+            </div>
+            {submitted && !password && <p className="mt-1 text-xs text-red-600">This field is required</p>}
+            {submitted && password && password.length < 6 && (
+              <p className="mt-1 text-xs text-red-600">Password must be at least 6 characters</p>
+            )}
+          </div>
 
-          <input
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-          />
-        </div>
+          <div>
+            <div className="relative">
+              <input
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="h-12 w-full rounded-xl border border-pink-200 bg-white/80 px-4 pr-16 text-slate-800 placeholder-slate-400 outline-none transition focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirm Password"
+                value={confirmPassword}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword((visible) => !visible)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-pink-800"
+                aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+              >
+                {showConfirmPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+              </button>
+            </div>
+            {submitted && !confirmPassword && <p className="mt-1 text-xs text-red-600">This field is required</p>}
+            {submitted && confirmPassword && password !== confirmPassword && (
+              <p className="mt-1 text-xs text-red-600">Passwords do not match</p>
+            )}
+          </div>
+        </form>
 
         <button
-          onClick={handleRegister}
+          type="submit"
+          form="register-form"
           disabled={loading}
           className="mt-5 h-12 w-full rounded-xl bg-pink-800 font-semibold text-white transition hover:bg-pink-900 disabled:bg-slate-300"
         >

@@ -2,9 +2,6 @@ import { useState } from "react";
 import Footer from "../../components/Footer";
 
 export default function ContactUs() {
-  const mapSrc =
-    "https://www.google.com/maps?q=25%20Galle%20Road,%20Colombo%2003&z=15&output=embed";
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,7 +26,7 @@ export default function ContactUs() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div className="mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 lg:px-8 lg:pb-14">
       <section className="overflow-hidden rounded-[32px] border border-pink-100 bg-white shadow-[0_20px_70px_rgba(244,114,182,0.12)]">
         <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
           <aside className="bg-[radial-gradient(circle_at_top_left,_rgba(251,207,232,0.95),_rgba(255,251,247,1)_60%,_rgba(255,255,255,1)_100%)] px-6 py-10 sm:px-10 lg:px-12 lg:py-14">
@@ -53,24 +50,6 @@ export default function ContactUs() {
                 <p className="text-sm font-semibold text-slate-900">Phone</p>
                 <p className="mt-1 text-sm text-slate-600">+94 77 456 7890</p>
               </div>
-              <div className="rounded-2xl border border-pink-100 bg-white/80 p-4 shadow-sm backdrop-blur-sm">
-                <p className="text-sm font-semibold text-slate-900">Address</p>
-                <p className="mt-1 text-sm text-slate-600">25 Galle Road, Colombo 03</p>
-              </div>
-            </div>
-
-            <div className="mt-8 overflow-hidden rounded-3xl border border-pink-100 bg-white shadow-sm">
-              <div className="border-b border-pink-100 px-4 py-3">
-                <p className="text-sm font-semibold text-slate-900">Find us on the map</p>
-                <p className="mt-1 text-xs text-slate-500">Tap to open the full location in Google Maps.</p>
-              </div>
-              <iframe
-                title="Crystal Clear Beauty location map"
-                src={mapSrc}
-                className="h-[320px] w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
             </div>
           </aside>
 
