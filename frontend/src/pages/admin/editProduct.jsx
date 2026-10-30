@@ -1,0 +1,175 @@
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import mediaUpload from "../../../Utils/mediaUplaod";
+import { PRODUCT_CATEGORIES } from "../../constants/productCategories";
+
+
+export default function EditProduct() {
+    const locationData=useLocation();
+
+    const navigate = useNavigate();
+    if(!locationData.state==null){
+        toast.error("please select a  product to edit")
+        window.location.href="/admin/products"
+    }
+    const product = locationData.state;
+    const [productId, setProductId] = useState(product.productId);
+    const [productName, setProductName] = useState(product.name);
+    const [altNames, setAltNames] = useState(product.altName?.join(", ") || "");
+    const [price, setPrice] = useState(product.price);
+    const [labeledPrice, setLabeledPrice] = useState(product.labledPrice);
+    const [description, setDescription] = useState(product.description);
+    const [category, setCategory] = useState(product.category || PRODUCT_CATEGORIES[0]);
+    const [stock, setStock] = useState(product.stock);
+    const[images,setImages]=useState([]);
+    
+   
+    async  function handleSubmit(){
+const promisesArray=[]
+for(let i=0;i<images.length;i++){
+    
+const promise=mediaUpload(images[i])
+promisesArray[i]=promise
+}
+
+const result = images.length > 0 ? await Promise.all(promisesArray) : product.images;
+try{
+       const altNamesInArray=altNames.split(",");
+        const product= {
+            productId: productId,
+            name: productName,
+           altName: altNamesInArray,
+            price: price,
+            labledPrice: labeledPrice,
+            description: description,
+            category: category,
+            stock: stock,
+            images:result
+          
+        }
+
+        const token=localStorage.getItem("token")
+         console.log(token)
+       await axios.put(import.meta.env.VITE_BACKEND_URL + "/api/product/" + productId, product, {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+//            .then(() => {
+//     toast.success("Product saved successfully");
+//          navigate("/admin/products");
+// })
+// .catch((error) => {
+//     toast.error("Product adding failed");
+//     console.error(error);
+// });
+         
+//        console.log(product) 
+//        toast.success("product saved")
+// }
+toast.success("product saved sucessfully")
+ navigate("/admin/products");
+}
+catch(error){
+    console.log(error);
+    toast.error("Product adding failed");
+}
+
+}
+
+
+    return (
+        <div className="flex min-h-full w-full items-start justify-center rounded-lg bg-pink-50 p-3 sm:p-6">
+            <div className="flex w-full max-w-md flex-col items-center rounded-3xl border border-pink-200 bg-white p-4 shadow-lg sm:p-5">
+                <input
+                disabled
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    placeholder="Product ID"
+                    value={productId}
+                    onChange={e => setProductId(e.target.value)}
+                />
+
+                <input
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    placeholder="Product Name"
+                    value={productName}
+                    onChange={e => setProductName(e.target.value)}
+                />
+
+                <input
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    placeholder="Alternative Names"
+                    value={altNames}
+                    onChange={e => setAltNames(e.target.value)}
+                />
+
+                <input
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    placeholder="Price"
+                    type="number"
+                    value={price}
+                    onChange={e => setPrice(e.target.value)}
+                />
+
+                <input
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    placeholder="Labeled Price"
+                    type="number"
+                    value={labeledPrice}
+                    onChange={e => setLabeledPrice(e.target.value)}
+                />
+
+                <textarea
+                    className="w-full h-16 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    placeholder="Description"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                />
+
+                <select
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    value={category}
+                    onChange={e => setCategory(e.target.value)}
+                >
+                    {PRODUCT_CATEGORIES.map(productCategory => (
+                        <option key={productCategory} value={productCategory}>
+                            {productCategory}
+                        </option>
+                    ))}
+                </select>
+                
+                <input 
+                type="file"
+                onChange={(e)=>
+                {
+                    setImages(e.target.files)
+                }
+                }
+                className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 cursor-pointer focus:border-pink-800"
+                // accept="image/*"
+                placeholder="upload the images"
+                multiple
+                
+                >
+                </input>
+
+                <input
+                    className="w-full h-10 border border-pink-200 rounded-xl px-4 py-2 m-1 outline-none focus:border-pink-800 focus:ring-2 focus:ring-pink-200"
+                    placeholder="Stock"
+                    type="number"
+                    value={stock}
+                    onChange={e => setStock(e.target.value)}
+                />
+                
+
+                <button 
+    className="w-full h-10 bg-pink-800 text-white rounded-xl m-1 font-semibold transition hover:bg-pink-900 shadow-lg shadow-pink-200"
+    onClick={handleSubmit}
+>
+    Edit Product
+</button>
+            </div>
+        </div>
+    );
+}
