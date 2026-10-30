@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -18,27 +17,6 @@ export default function Footer() {
             You can keep the default hero image or swap it with your own beauty banner later. The home layout is ready for product browsing, contact info, reviews, cart access, and login.
           </p>
 
-          {/* Social Media Links */}
-          <div className="mt-6 flex gap-4">
-            <a
-              href="https://www.facebook.com/crystalclearbeauty"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-pink-50 text-2xl text-pink-800 shadow-md transition hover:bg-pink-800 hover:text-white hover:-translate-y-1"
-              aria-label="Facebook"
-            >
-              <FaFacebook />
-            </a>
-            <a
-              href="https://www.instagram.com/crystalclearbeauty"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-pink-50 text-2xl text-pink-800 shadow-md transition hover:bg-pink-800 hover:text-white hover:-translate-y-1"
-              aria-label="Instagram"
-            >
-              <FaInstagram />
-            </a>
-          </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
